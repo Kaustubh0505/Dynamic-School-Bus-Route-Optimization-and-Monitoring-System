@@ -1,54 +1,123 @@
-# Dynamic-School-Bus-Route-Optimization-and-Monitoring-System
+# 🚌 Dynamic School Bus Route Optimization & Monitoring Platform
 
-📌 Overview
+> A web-based system for dynamically generating and monitoring school bus routes based on daily operational conditions.
 
-Traditional school transportation systems operate using fixed bus routes and static schedules, which do not adapt to daily changes such as student absences, traffic variations, or bus capacity constraints. This rigidity often results in inefficient routing, delayed pickups, higher operational costs, and limited visibility into transportation activities.
+---
 
-The Dynamic School Bus Route Optimization and Monitoring Platform is a web-based system designed to address these challenges using a rule-based routing approach. The platform dynamically generates and updates school bus routes based on daily operational inputs, improving efficiency, transparency, and monitoring of school transportation operations.
+## 📌 Project Overview
 
-🎯 Objectives
+Traditional school transportation systems use fixed routes and static schedules that cannot adapt to daily changes. This platform solves that by applying **rule-based dynamic routing** that accounts for:
+- Daily student attendance
+- Bus capacity constraints
+- Pickup time windows
+- Simulated traffic conditions
 
-Optimize school bus routes dynamically based on daily conditions
-Reduce travel time and operational inefficiencies
-Ensure bus capacity and safety constraints are respected
-Provide visibility into bus status, routes, and student boarding
-Demonstrate platform-based system design using modern web technologies
+---
 
-⚙️ System Features
+## 🛠️ Tech Stack
 
-1. Dynamic Route Optimization
+| Layer       | Technology              |
+|-------------|-------------------------|
+| Backend     | Python 3.11 + FastAPI   |
+| ORM         | SQLAlchemy 2.0          |
+| Database    | PostgreSQL              |
+| Migrations  | Alembic                 |
+| Frontend    | React + Tailwind CSS    |
+| Auth        | JWT (python-jose)       |
+| Testing     | pytest + pytest-asyncio |
 
-  Routes are generated based on:
-  Daily student attendance
-  Bus capacity constraints
-  Pickup time windows
-  Simulated traffic conditions
-  Rule-based logic ensures explainable and deterministic routing decisions
+---
 
-2. Bus & Student Management
+## 👥 Team Members & Contributions
 
-  Manage student profiles and pickup points
-  Store bus details such as capacity and availability
-  Assign students to buses based on constraints
+| Member | Role | Responsibilities |
+|--------|------|-----------------|
+| Member 1 | Backend Lead | Project scaffold, DB models, migrations, base classes |
+| Member 2 | Route Engine | Optimization algorithm, route APIs, traffic simulation |
+| Member 3 | Monitoring & Alerts | Bus tracking, boarding logs, alert service |
+| Member 4 | Frontend | React UI, auth flow, all pages |
+| Member 5 | Design & Docs | Design patterns, UML diagrams, project report |
 
-3. Monitoring & Tracking
-  
-  Track bus status and occupancy levels
-  Log student boarding and drop-off events
-  Maintain route execution records
+---
 
-4. Alert Mechanism
+## ⚙️ Setup & Installation
 
-  Flags exceptional conditions such as:
-  Capacity limit violations
-  Route delays
-  Manual emergency triggers
+### Prerequisites
+- Python 3.11+
+- PostgreSQL 15+
+- Node.js 18+ (for frontend)
 
-🧠 Optimization Approach
+### Backend Setup
 
-The system uses a rule-based optimization strategy, not machine learning.
-Predefined constraints and conditions are applied to allocate students to buses efficiently while ensuring:
-    Capacity compliance
-    Timely school arrival
-    Safe and manageable routes
-    Traffic conditions are simulated to demonstrate dynamic route recalculation behavior.
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+cp .env.example .env
+# Edit .env with your PostgreSQL credentials
+
+alembic upgrade head             # Run migrations
+uvicorn app.main:app --reload    # Start server
+```
+
+API will be live at: `http://localhost:8000`
+Interactive docs at: `http://localhost:8000/docs`
+
+### Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend will be live at: `http://localhost:5173`
+
+---
+
+## 🏗️ Architecture
+
+```
+school-bus-platform/
+├── backend/
+│   ├── app/
+│   │   ├── core/           # Config, DB connection, base entity
+│   │   ├── models/         # SQLAlchemy ORM models
+│   │   ├── schemas/        # Pydantic request/response schemas
+│   │   ├── routes/         # FastAPI route handlers (controllers)
+│   │   ├── services/       # Business logic layer
+│   │   │   └── optimization/  # Route optimization strategies
+│   │   └── utils/          # Factories, helpers
+│   └── alembic/            # Database migrations
+└── frontend/               # React application
+```
+
+### Design Patterns
+- **Strategy Pattern** — Swappable routing algorithm strategies
+- **Observer Pattern** — Event-driven alert notifications
+- **Factory Pattern** — Centralized object creation
+
+### SOLID Principles
+- **S** — Each service handles one domain concern
+- **O** — BaseEntity & strategies open for extension, closed for modification
+- **L** — All routing strategies are interchangeable
+- **I** — Separate Pydantic schemas per operation
+- **D** — Routes depend on service interfaces, not implementations
+
+---
+
+## 🧪 Test Cases
+
+*(To be filled in Phase 7)*
+
+---
+
+## 📊 UML Diagrams
+
+All diagrams are in the `/diagrams` folder:
+- `class_diagram.png`
+- `use_case_diagram.png`
+- `sequence_diagram.png`
+- `er_diagram.png`
