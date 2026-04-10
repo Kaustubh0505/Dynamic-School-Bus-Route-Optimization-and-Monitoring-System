@@ -137,10 +137,3 @@ school-bus-system/
 
 ---
 
-## 📊 UML Diagrams
-
-All diagrams are in the `/diagrams` folder:
-- `class_diagram.png`
-- `use_case_diagram.png`
-- `sequence_diagram.png`
-- `er_diagram.png`
