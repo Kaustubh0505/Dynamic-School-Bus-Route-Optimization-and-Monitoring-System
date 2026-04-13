@@ -131,9 +131,3 @@ school-bus-system/
 
 ---
 
-## 🧪 Test Cases
-
-*(To be filled in Phase 7)*
-
----
-
