@@ -247,35 +247,7 @@ const ParentDashboard: React.FC = () => {
                   </>
                 )}
 
-                {/* Route stop markers - Only showing your own children's stops */}
-                {routeStops.map((stop, i) => {
-                  const isMyChildStop = children.some(c => c.student.name === stop.name);
-                  if (!isMyChildStop) return null;
-
-                  return (
-                    <Marker key={i} position={[stop.lat, stop.lng]}>
-                      <Popup>
-                        <div className="text-center py-1 font-sans">
-                          <strong className="text-gray-900">📍 {stop.name} (Your Child)</strong>
-                          <p className="text-xs text-gray-500 mt-1">Pickup: {stop.time}</p>
-                        </div>
-                      </Popup>
-                    </Marker>
-                  );
-                })}
-
-                {/* Route polyline */}
-                {routePolyline.length > 1 && (
-                  <Polyline
-                    positions={routePolyline}
-                    pathOptions={{
-                      color: '#FFC107',
-                      weight: 4,
-                      opacity: 0.8,
-                      dashArray: '10, 8'
-                    }}
-                  />
-                )}
+                {/* All other markers and route paths removed for privacy. Only the live Bus location (above) is shown. */}
               </MapContainer>
             )}
           </div>

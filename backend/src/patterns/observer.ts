@@ -24,6 +24,7 @@ import { mailService } from '../services/mail.service';
 export class ParentNotifierObserver implements IObserver {
   async update(studentId: string, status: string): Promise<void> {
     try {
+      console.log(`[Observer] Triggered for student: ${studentId} with status: ${status}`);
       // 1. Fetch student info
       const student = await Student.findById(studentId);
       if (!student) {
@@ -31,12 +32,16 @@ export class ParentNotifierObserver implements IObserver {
         return;
       }
 
+      console.log(`[Observer] Found student: ${student.name}. Looking for parent: ${student.parentId}`);
+
       // 2. Fetch parent info
       const parent = await User.findById(student.parentId);
       if (!parent || !parent.email) {
         console.error(`[Observer Error] Parent for student ${student.name} not found or has no email.`);
         return;
       }
+
+      console.log(`[Observer] Sending email to parent: ${parent.email}`);
 
       // 3. Send Email
       await mailService.sendBoardingNotification(parent.email, student.name, status);

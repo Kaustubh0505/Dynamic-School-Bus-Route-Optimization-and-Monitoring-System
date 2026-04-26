@@ -100,8 +100,7 @@ export class AttendanceService {
         const studentInputs = students.map(s => ({
           id: (s._id as any).toString(),
           name: s.name,
-          present: presentIds.includes((s._id as any).toString()) ||
-                   !absentIds.includes((s._id as any).toString()), // unmarked = present
+          present: presentIds.includes((s._id as any).toString()), // unmarked = NOT present now
           location: { lat: s.location.lat, lng: s.location.lng }
         }));
 
@@ -113,6 +112,19 @@ export class AttendanceService {
         // Run optimization
         routeOptimizationEngine.setStrategy(new NearestNeighborStrategy());
         const optimizedRoutes = routeOptimizationEngine.generateOptimizedRoute(studentInputs, busInputs);
+
+        // If no students are present for this bus, clear the route stops
+        if (optimizedRoutes.length === 0 || optimizedRoutes[0].stops.length === 0) {
+          await Route.findOneAndUpdate(
+            { busId: new mongoose.Types.ObjectId(busId) },
+            {
+              name: `Morning Route - Bus ${busId.substring(0, 4).toUpperCase()}`,
+              stops: [] // Clear stops
+            },
+            { upsert: true, new: true }
+          );
+          continue;
+        }
 
         // Generate traffic conditions and dynamic pickup windows
         for (const busResult of optimizedRoutes) {

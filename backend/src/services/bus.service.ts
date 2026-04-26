@@ -76,13 +76,8 @@ class BusService {
           location: s.location,
           parent: s.parentId
         })),
-      absentStudents: students
-        .filter(s => absentIds.includes(s._id.toString()))
-        .map(s => ({
-          id: s._id.toString(),
-          name: s.name,
-          email: s.email
-        })),
+      absentStudents: [],
+
       route: routeDoc ? routeDoc.stops.map(stop => ({
         name: stop.stopName,
         lat: stop.location.lat,

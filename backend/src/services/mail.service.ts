@@ -1,13 +1,17 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class MailService {
   private transporter;
 
   constructor() {
+    console.log(`[MailService] Initializing with user: ${process.env.SMTP_USER || 'UNDEFINED'}`);
     this.transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+      secure: process.env.SMTP_SECURE === 'true', 
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
