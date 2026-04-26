@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import api from '../api/axios';
 import { MapPin, Navigation, UserCheck, UserX, Loader2, CheckCircle2, ChevronRight, Info, AlertCircle, Zap } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+// import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -46,7 +46,7 @@ const DriverDashboard: React.FC = () => {
   const [optimizing, setOptimizing] = useState(false);
   const [optimizeStrategy, setOptimizeStrategy] = useState('nearest');
   const socketRef = useRef<Socket | null>(null);
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { showToast } = useToast();
 
   // Step 1: Resolve the bus assigned to this driver

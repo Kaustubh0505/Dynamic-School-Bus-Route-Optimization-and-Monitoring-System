@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Bus, Users, ShieldAlert, ArrowLeft, LogOut, Settings, BarChart3 } from 'lucide-react';
+import { Bus, Users, ArrowLeft, LogOut, Settings, BarChart3 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const DashboardLayout: React.FC = () => {

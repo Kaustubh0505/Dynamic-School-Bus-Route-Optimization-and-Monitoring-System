@@ -3,7 +3,7 @@ import api from '../api/axios';
 import { useToast } from '../context/ToastContext';
 import {
   Bus, Users, UserPlus, Trash2, Edit3, Plus, X, Loader2, GraduationCap,
-  ChevronDown, ChevronUp, Save, Link2
+  ChevronDown, ChevronUp, Save
 } from 'lucide-react';
 
 /* ── Types ── */

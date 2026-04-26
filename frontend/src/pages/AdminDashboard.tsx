@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import api from '../api/axios';
-import { Bus, Map, Users, AlertTriangle, Loader2, Info, Clock, AlertCircle, Zap, Settings } from 'lucide-react';
+import { Bus, Map, Users, AlertTriangle, Loader2, Info, Clock, AlertCircle, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useToast } from '../context/ToastContext';
+// import { useToast } from '../context/ToastContext';
 import { io, Socket } from 'socket.io-client';
 
 interface DashboardMetrics {
@@ -34,7 +34,7 @@ const AdminDashboard: React.FC = () => {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const socketRef = useRef<Socket | null>(null);
-  const { showToast } = useToast();
+  // const { showToast } = useToast();
 
   const fetchAdminData = useCallback(async () => {
     try {

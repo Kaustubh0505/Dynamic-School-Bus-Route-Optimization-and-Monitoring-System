@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import api from '../api/axios';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { RefreshCw, CheckCircle, Clock, MapPin, Wifi, WifiOff, Users, UserCheck, UserX, Loader2, AlertCircle } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { RefreshCw, Clock, MapPin, Wifi, WifiOff, Users, UserCheck, UserX, Loader2 } from 'lucide-react';
+// import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
 // Fix default marker icons broken by Vite/webpack bundling
@@ -50,7 +50,7 @@ const ParentDashboard: React.FC = () => {
   const [attendanceMap, setAttendanceMap] = useState<Record<string, AttendanceStatus>>({});
   const [attendanceLoading, setAttendanceLoading] = useState<Record<string, boolean>>({});
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { showToast } = useToast();
 
   // Step 1: Resolve bus for parent's children
