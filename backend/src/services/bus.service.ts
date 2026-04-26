@@ -60,11 +60,8 @@ class BusService {
       .filter(r => r.status === 'ABSENT')
       .map(r => r.studentId.toString());
 
-    // Students without attendance marked are treated as present by default
-    const unmarkedStudents = students.filter(
-      s => !presentIds.includes(s._id.toString()) && !absentIds.includes(s._id.toString())
-    );
-    const finalPresentIds = [...presentIds, ...unmarkedStudents.map(s => s._id.toString())];
+    const finalPresentIds = presentIds;
+
 
     // Get current route for this bus
     const routeDoc = await Route.findOne({ busId: new mongoose.Types.ObjectId(busId) });

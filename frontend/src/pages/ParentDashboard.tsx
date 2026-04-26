@@ -247,17 +247,22 @@ const ParentDashboard: React.FC = () => {
                   </>
                 )}
 
-                {/* Route stop markers */}
-                {routeStops.map((stop, i) => (
-                  <Marker key={i} position={[stop.lat, stop.lng]}>
-                    <Popup>
-                      <div className="text-center py-1 font-sans">
-                        <strong className="text-gray-900">📍 {stop.name}</strong>
-                        <p className="text-xs text-gray-500 mt-1">Pickup: {stop.time}</p>
-                      </div>
-                    </Popup>
-                  </Marker>
-                ))}
+                {/* Route stop markers - Only showing your own children's stops */}
+                {routeStops.map((stop, i) => {
+                  const isMyChildStop = children.some(c => c.student.name === stop.name);
+                  if (!isMyChildStop) return null;
+
+                  return (
+                    <Marker key={i} position={[stop.lat, stop.lng]}>
+                      <Popup>
+                        <div className="text-center py-1 font-sans">
+                          <strong className="text-gray-900">📍 {stop.name} (Your Child)</strong>
+                          <p className="text-xs text-gray-500 mt-1">Pickup: {stop.time}</p>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  );
+                })}
 
                 {/* Route polyline */}
                 {routePolyline.length > 1 && (
@@ -328,14 +333,16 @@ const ParentDashboard: React.FC = () => {
                           <>
                             <button
                               onClick={() => markAttendance(child.id, 'PRESENT')}
-                              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all border ${attendanceMap[child.id] === 'PRESENT' ? 'bg-emerald-50 text-emerald-600 border-emerald-200 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900 shadow-sm'}`}
+                              disabled={!!attendanceMap[child.id]}
+                              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all border ${attendanceMap[child.id] === 'PRESENT' ? 'bg-emerald-50 text-emerald-600 border-emerald-200 shadow-sm' : attendanceMap[child.id] ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900 shadow-sm'}`}
                             >
                               <UserCheck className="w-4 h-4" />
                               Present
                             </button>
                             <button
                               onClick={() => markAttendance(child.id, 'ABSENT')}
-                              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all border ${attendanceMap[child.id] === 'ABSENT' ? 'bg-red-50 text-red-600 border-red-200 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900 shadow-sm'}`}
+                              disabled={!!attendanceMap[child.id]}
+                              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all border ${attendanceMap[child.id] === 'ABSENT' ? 'bg-red-50 text-red-600 border-red-200 shadow-sm' : attendanceMap[child.id] ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900 shadow-sm'}`}
                             >
                               <UserX className="w-4 h-4" />
                               Absent

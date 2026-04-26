@@ -20,14 +20,20 @@ export class AttendanceService {
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
 
-    const record = await Attendance.findOneAndUpdate(
-      {
-        studentId: new mongoose.Types.ObjectId(studentId),
-        date: startOfDay,
-      },
-      { status },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const existing = await Attendance.findOne({
+      studentId: new mongoose.Types.ObjectId(studentId),
+      date: startOfDay,
+    });
+
+    if (existing) {
+      throw new Error('Attendance status has already been set for today.');
+    }
+
+    const record = await Attendance.create({
+      studentId: new mongoose.Types.ObjectId(studentId),
+      date: startOfDay,
+      status
+    });
 
     // Trigger route re-optimization automatically
     await this.triggerRouteOptimization();

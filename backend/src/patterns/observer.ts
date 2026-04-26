@@ -6,7 +6,7 @@
 
 // IObserver Interface
 export interface IObserver {
-  update(studentId: string, status: string): void;
+  update(studentId: string, status: string): void | Promise<void>;
 }
 
 // ISubject Interface
@@ -16,12 +16,35 @@ export interface ISubject {
   notify(studentId: string, status: string): void;
 }
 
+import Student from '../models/student.model';
+import User from '../models/user.model';
+import { mailService } from '../services/mail.service';
+
 // Concrete Observer: Sends Notifications to Parents
 export class ParentNotifierObserver implements IObserver {
-  update(studentId: string, status: string): void {
-    // In a production app, this would query the User table for the parent 
-    // linked to `studentId` and dispatch an SMS, Email, or Push Notification.
-    console.log(`[Observer Alert] Notification Dispatched: Student ${studentId} marked as ${status}.`);
+  async update(studentId: string, status: string): Promise<void> {
+    try {
+      // 1. Fetch student info
+      const student = await Student.findById(studentId);
+      if (!student) {
+        console.error(`[Observer Error] Student ${studentId} not found.`);
+        return;
+      }
+
+      // 2. Fetch parent info
+      const parent = await User.findById(student.parentId);
+      if (!parent || !parent.email) {
+        console.error(`[Observer Error] Parent for student ${student.name} not found or has no email.`);
+        return;
+      }
+
+      // 3. Send Email
+      await mailService.sendBoardingNotification(parent.email, student.name, status);
+      
+      console.log(`[Observer Alert] Email Notification Sent to ${parent.email}: Student ${student.name} marked as ${status}.`);
+    } catch (error) {
+      console.error('[Observer Error] Failed to send notification:', error);
+    }
   }
 }
 
