@@ -4,9 +4,27 @@ import { Server, Socket } from 'socket.io';
 let io: Server;
 
 export const initSocket = (httpServer: HttpServer) => {
+  const allowedOrigins = [
+    'http://localhost:5174',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://dynamic-school-bus-route-optimizati-smoky.vercel.app'
+  ];
+
+  if (process.env.ALLOWED_ORIGINS) {
+    const envOrigins = process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim());
+    allowedOrigins.push(...envOrigins);
+  }
+
   io = new Server(httpServer, {
     cors: {
-      origin: ['http://localhost:5174', 'http://localhost:5173','https://dynamic-school-bus-route-optimizati-smoky.vercel.app'],
+      origin: (origin, callback) => {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       credentials: true
     }
