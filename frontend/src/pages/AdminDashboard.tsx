@@ -136,7 +136,7 @@ const AdminDashboard: React.FC = () => {
               <div className="w-2 h-2 bg-[#FFC107] rounded-full" />
               <h3 className="text-lg font-bold text-gray-900">Live Fleet Status</h3>
             </div>
-            <span className="text-[10px] font-mono font-bold tracking-wider text-emerald-500">WEBSOCKET: CONNECTED</span>
+
           </div>
           <div className="overflow-x-auto flex-1">
             <table className="w-full text-left">

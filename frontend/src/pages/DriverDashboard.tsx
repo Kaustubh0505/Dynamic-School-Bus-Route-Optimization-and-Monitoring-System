@@ -197,10 +197,7 @@ const DriverDashboard: React.FC = () => {
             Bus <span className="font-bold text-gray-900">{busInfo?.registrationNumber || busId?.substring(0, 8)}</span> · Live manifest and route sync enabled.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs font-mono bg-white border border-gray-200 px-4 py-2 rounded-xl text-gray-500 shadow-sm">
-          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-          WEBSOCKET: CONNECTED
-        </div>
+
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
